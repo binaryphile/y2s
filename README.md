@@ -127,6 +127,14 @@ double-quoted syntax which allows the use of escaped characters such as
 
 y2s does not understand the JSON forms of keys, hashes or arrays.
 
+Because y2s denormalizes the yml data, copying the same value into
+multiple locations, it is only suitable for reading data.  Writing data
+into a struct would require updating all of the locations in which that
+data appears.  I have no plans for implementing such support.
+
+y2s does not support converting structs to yml, nor writing yml files,
+and there are no plans for such support.
+
 y2s has no feedback on errors which occur during parsing at the moment.
 The best thing to try is to pass the same input through a real parser,
 and to keep the aforementioned limitations in mind.

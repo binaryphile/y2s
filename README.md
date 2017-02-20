@@ -25,9 +25,9 @@ Using the function `yml2struct` to store the result in a hash called
 `hash` looks like this:
 
 ```
-source y2s.bash
-declare -A hash
-yml2struct hash demo.yml
+$ source y2s.bash
+$ declare -A hash
+$ yml2struct hash demo.yml
 ```
 
 The resulting `hash` looks like so:
@@ -41,8 +41,9 @@ hash[myarray.0]="zero"
 hash[myarray.1]="one"
 ```
 
-Notice that the scalar values are avialable via the keys which specify
-their full paths:
+Notice that the scalar values are available via the keys which specify
+their full paths (although this is not the recommended method, see
+below):
 
 ```
 $ echo "${hash[myarray.0]}"
@@ -50,30 +51,37 @@ zero
 ```
 
 The non-scalar values are still stored as strings, however they are
-serialized as the right-hand side of an assignment statement would look:
+serialized as the right-hand side of an assignment statement.  For
+example, this is not the recommended way of accessing such values, but
+you could do this:
 
 ```
-$ eval "$(array=${hash[myarray]})"
+$ eval "array=${hash[myarray]}"
 $ echo "${array[0]}"
 zero
 ```
 
-Since these methods of accessing the values are slightly clunky, there
-is a convenience function `lookup` which allows you to use dotted
-notation to access values and substructures.  If it is given the name of
-a variable as its second argument, it stores the value there, otherwise
-it echoes the value:
+Since these methods of accessing the values are somewhat clunky, there
+is a convenience function, called `lookup`, which allows you to use
+dotted notation to access values and substructures.
+
+If it is given the name of a variable as its second argument, it stores
+the value there, otherwise it echoes the value:
 
 ```
 $ lookup hash.myhash.one
 1
+```
 
+```
 $ unset -v array
 $ declare -a array
 $ lookup hash.myarray array
 $ echo "${array[0]}"
 zero
+```
 
+```
 $ declare -A myhash
 $ lookup hash.myhash myhash
 $ echo "${myhash[one]}"
@@ -82,12 +90,17 @@ $ echo "${myhash[one]}"
 
 Using `lookup` to instantiate a hash with nested structures also
 preserves the embedded structures, so the result is itself a struct.
-Instantiating an array loses the embedded structure data since it is not
-capable of using complex string-based keys.  However, you may always use
-a hash as the variable into which an array structure would be stored and
-it will act the same as an array (for the most part) but will also still
-be a struct.  This means you can instantiate and use subportions of the
-data structure with the `lookup` function.
+This means you can instantiate and then use subportions of the data
+structure with the `lookup` function as well.
+
+Instantiating an array, if supported, would lose the embedded structure
+data since it is not capable of using complex string-based keys. At the
+moment, `lookup` doesn't support this with arbitrary subtrees, but you
+can instantiate a flat array into an array variable with it.
+
+However, you may instead use a hash as the variable into which an array
+structure would be stored and it will act the same as an array (for the
+most part) but will also still be a struct.
 
 Installation
 ============
@@ -100,19 +113,17 @@ Then you may source it in your scripts with `source y2s.bash`.
 Limitations
 ===========
 
-The current version does not support embedding data structures under
-arrays at the moment.  YAML array syntax may only contain scalars for
-values.
+y2s understands hashes and arrays, in addition to scalar values.
 
-y2s only supports a very limited subset of YAML.  It currently
-understands single-lined values, although it does understand
-double-quoted syntax which allows the use of escaped characters such as
-`\n`.
+y2s supports nesting arrays in hashes and vice-versa.
 
 y2s understands plain, single- and double-quoted scalars.  It strives
 for compatibility with Ruby's syck implementation as a guide.
 
-y2s understands hashes and arrays, in addition to scalar values.
+y2s only supports a very limited subset of YAML.  It currently
+understands only single-lined values, although it does understand
+double-quoted syntax which allows the use of escaped characters such as
+`\n`.
 
 y2s does not understand the JSON forms of keys, hashes or arrays.
 
@@ -124,8 +135,8 @@ y2s only accepts indents of two space characters per level.
 
 y2s only allows printable characters in values (including whitespace).
 
-Notes
-=====
+Shouts-Out
+==========
 
 y2s is inspired by [YAY] and the Stack Overflow articles cited by YAY.
 

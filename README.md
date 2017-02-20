@@ -103,7 +103,7 @@ structure would be stored and it will act the same as an array (for the
 most part) but will also still be a struct.
 
 Installation
-============
+------------
 
 y2s depends on the [nano] library.  Follow its installation
 instructions, then clone y2s and put its `lib` directory on your PATH.
@@ -111,7 +111,7 @@ instructions, then clone y2s and put its `lib` directory on your PATH.
 Then you may source it in your scripts with `source y2s.bash`.
 
 Limitations
-===========
+-----------
 
 y2s understands hashes and arrays, in addition to scalar values.
 
@@ -144,7 +144,7 @@ y2s only accepts indents of two space characters per level.
 y2s only allows printable characters in values (including whitespace).
 
 Shouts-Out
-==========
+----------
 
 y2s is inspired by [YAY] and the Stack Overflow articles cited by YAY.
 

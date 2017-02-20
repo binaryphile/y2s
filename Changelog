@@ -1,0 +1,12 @@
+v10.10.10
+=========
+
+- Initial version
+
+- Supports arrays, hashes, various single-line forms of scalars
+
+- Supports nesting
+
+- Supports lookup
+
+- Working test suite

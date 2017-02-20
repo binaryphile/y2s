@@ -73,12 +73,12 @@ _parse_hash_values () {
 }
 
 _parse_line () {
-  [[ $line =~ $hash_double_quoted_expression    ]] && { _parse hash   double; return ;}
-  [[ $line =~ $hash_single_quoted_expression    ]] && { _parse hash   single; return ;}
-  [[ $line =~ $hash_start_and_plain_expression  ]] && { _parse hash   plain;  return ;}
-  [[ $line =~ $array_double_quoted_expression   ]] && { _parse array  double; return ;}
-  [[ $line =~ $array_single_quoted_expression   ]] && { _parse array  single; return ;}
-  [[ $line =~ $array_plain_expression           ]] && { _parse array  plain;  return ;}
+  [[ $line =~ $hash_double_quoted_expression    ]] && { _parse hash   double  ; return ;}
+  [[ $line =~ $hash_single_quoted_expression    ]] && { _parse hash   single  ; return ;}
+  [[ $line =~ $hash_start_and_plain_expression  ]] && { _parse hash   plain   ; return ;}
+  [[ $line =~ $array_double_quoted_expression   ]] && { _parse array  double  ; return ;}
+  [[ $line =~ $array_single_quoted_expression   ]] && { _parse array  single  ; return ;}
+  [[ $line =~ $array_plain_expression           ]] && { _parse array  plain   ; return ;}
   return 1
 }
 
@@ -111,6 +111,32 @@ _process_line () {
     return 1
   fi
   if [[ $curdatatype == 'array' ]]; then let 'key += 1'; fi
+}
+
+_setup_expressions () {
+  array_double_quoted_expression='<indent>- "[value]" '
+  array_plain_expression='<indent>- [value] '
+  array_single_quoted_expression="<indent>- '[value]' "
+
+  array_double_quoted_expression=${array_double_quoted_expression/\[value]/$quoted_value}
+  array_plain_expression=${array_plain_expression/\[value]/$plain_value}
+  array_single_quoted_expression=${array_single_quoted_expression/\[value]/$quoted_value}
+
+  _expand_expression "$array_double_quoted_expression"  array_double_quoted_expression
+  _expand_expression "$array_plain_expression"          array_plain_expression
+  _expand_expression "$array_single_quoted_expression"  array_single_quoted_expression
+
+  hash_double_quoted_expression='<indent><key> : "[value]" '
+  hash_single_quoted_expression="<indent><key> : '[value]' "
+  hash_start_and_plain_expression='<indent><key> : [value] '
+
+  hash_double_quoted_expression=${hash_double_quoted_expression/\[value]/$quoted_value}
+  hash_single_quoted_expression=${hash_single_quoted_expression/\[value]/$quoted_value}
+  hash_start_and_plain_expression=${hash_start_and_plain_expression/\[value]/$plain_value}
+
+  _expand_expression "$hash_double_quoted_expression"   hash_double_quoted_expression
+  _expand_expression "$hash_start_and_plain_expression" hash_start_and_plain_expression
+  _expand_expression "$hash_single_quoted_expression"   hash_single_quoted_expression
 }
 
 _value_of () {
@@ -159,30 +185,7 @@ yml2struct () {
   local line
   local wait=false
 
-  array_double_quoted_expression='<indent>- "[value]" '
-  array_plain_expression='<indent>- [value] '
-  array_single_quoted_expression="<indent>- '[value]' "
-
-  array_double_quoted_expression=${array_double_quoted_expression/\[value]/$quoted_value}
-  array_plain_expression=${array_plain_expression/\[value]/$plain_value}
-  array_single_quoted_expression=${array_single_quoted_expression/\[value]/$quoted_value}
-
-  _expand_expression "$array_double_quoted_expression"  array_double_quoted_expression
-  _expand_expression "$array_plain_expression"          array_plain_expression
-  _expand_expression "$array_single_quoted_expression"  array_single_quoted_expression
-
-  hash_double_quoted_expression='<indent><key> : "[value]" '
-  hash_single_quoted_expression="<indent><key> : '[value]' "
-  hash_start_and_plain_expression='<indent><key> : [value] '
-
-  hash_double_quoted_expression=${hash_double_quoted_expression/\[value]/$quoted_value}
-  hash_single_quoted_expression=${hash_single_quoted_expression/\[value]/$quoted_value}
-  hash_start_and_plain_expression=${hash_start_and_plain_expression/\[value]/$plain_value}
-
-  _expand_expression "$hash_double_quoted_expression"   hash_double_quoted_expression
-  _expand_expression "$hash_start_and_plain_expression" hash_start_and_plain_expression
-  _expand_expression "$hash_single_quoted_expression"   hash_single_quoted_expression
-
+  _setup_expressions
   _y2s_rec resulth <"$filename" || return
 
   local "$ref" || return

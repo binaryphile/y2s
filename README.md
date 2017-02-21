@@ -89,6 +89,8 @@ most part) but will also still be a struct.
 Installation
 ------------
 
+Requires Bash 4.3 or higher.
+
 y2s depends on the [nano] library. Follow its installation instructions,
 then clone y2s and put its `lib` directory on your PATH.
 

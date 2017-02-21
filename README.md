@@ -104,6 +104,10 @@ y2s supports nesting arrays in hashes and vice-versa.
 y2s understands plain, single- and double-quoted scalars. It strives for
 compatibility with Ruby's syck implementation as a guide.
 
+y2s only accepts indents of two space characters per level.
+
+y2s only allows printable characters in values (including whitespace).
+
 y2s only supports a very limited subset of YAML. It currently
 understands only single-lined values, although it does understand
 double-quoted syntax which allows the use of escaped characters such as
@@ -122,10 +126,6 @@ and there are no plans for such support.
 y2s has no feedback on errors which occur during parsing at the moment.
 The best thing to try is to pass the same input through a real parser,
 and to keep the aforementioned limitations in mind.
-
-y2s only accepts indents of two space characters per level.
-
-y2s only allows printable characters in values (including whitespace).
 
 Shouts-Out
 ----------

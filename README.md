@@ -5,10 +5,10 @@ y2s stands for "YAML2Struct". It is a handful of bash functions for
 parsing a limited subset of YAML into a makeshift bash nested data
 structure.
 
-The structure, or "struct" for short, is a hash which contains keys for
-all of the leaf elements in the YAML source document, along with a
-slightly custom syntax for storing all of the intermediate levels of the
-structure as well.
+The structure, or "struct" for short, is a hash (a.k.a. associative
+array) which contains keys for all of the leaf elements in the YAML
+source document, along with a slightly custom syntax for storing all of
+the intermediate levels of the structure as well.
 
 For example, consider the following `demo.yml` file:
 
@@ -36,16 +36,15 @@ The resulting `hash` looks like so:
     hash[myarray.1]="one"
 
 Notice that the scalar values are available via the keys which specify
-their full paths (although this is not the recommended method, see
-below):
+their full paths (although this is not the recommended usage pattern,
+instead see below):
 
     $ echo "${hash[myarray.0]}"
     zero
 
 The non-scalar values are still stored as strings, however they are
 serialized as the right-hand side of an assignment statement. For
-example, this is not the recommended way of accessing such values, but
-you could do this:
+example, you could do this (again, not the recommended usage pattern):
 
     $ eval "array=${hash[myarray]}"
     $ echo "${array[0]}"
@@ -77,14 +76,16 @@ preserves the embedded structures, so the result is itself a struct.
 This means you can instantiate and then use subportions of the data
 structure with the `lookup` function as well.
 
-Instantiating an array, if supported, would lose the embedded structure
-data since it is not capable of using complex string-based keys. At the
-moment, `lookup` doesn't support this with arbitrary subtrees, but you
-can instantiate a flat array into an array variable with it.
+Instantiating an array with nested elements would lose the embedded
+structure data, since the array is not capable of using complex
+string-based keys. For that reason, `lookup` doesn't support doing so
+with arbitrary subtrees.
+
+Only flat array structures can be instantiated into a bash array.
 
 However, you may instead use a hash as the variable into which an array
-structure would be stored and it will act the same as an array (for the
-most part) but will also still be a struct.
+structure would be stored, and it will act the same as an array does
+(for the most part) but will also still be a struct.
 
 Installation
 ------------

@@ -104,8 +104,8 @@ y2s understands hashes and arrays, in addition to scalar values.
 
 y2s supports nesting arrays in hashes and vice-versa.
 
-y2s understands plain, single- and double-quoted scalars. It strives for
-compatibility with Ruby's syck implementation as a guide.
+y2s understands plain (unquoted), single- and double-quoted scalars. It
+strives for compatibility with Ruby's syck implementation as a guide.
 
 y2s only accepts indents of two space characters per level.
 

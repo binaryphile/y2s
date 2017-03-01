@@ -1,0 +1,1 @@
+../../kaizen/lib/shpec-helper.bash

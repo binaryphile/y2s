@@ -1,4 +1,4 @@
-library=./shpec_helper.bash
+library=./shpec-helper.bash
 source "$library" 2>/dev/null || source "${BASH_SOURCE%/*}/$library"
 unset -v library
 

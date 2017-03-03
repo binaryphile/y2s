@@ -1,8 +1,17 @@
-library=./shpec-helper.bash
-source "$library" 2>/dev/null || source "${BASH_SOURCE%/*}/$library"
-unset -v library
+source import.bash
+
+shpec_helper_imports=(
+  initialize_shpec_helper
+  shpec_source
+  stop_on_error
+)
+eval "$(importa shpec-helper shpec_helper_imports)"
+initialize_shpec_helper
 
 shpec_source lib/y2s.bash
+
+stop_on_error=true
+stop_on_error
 
 describe 'lookup'
   it "returns a scalar by name from a lookup"

@@ -8,9 +8,19 @@ v0 in semver parlance.
 [Unreleased]
 ------------
 
+### Added
+
+-   explanation in readme that keys must meet bash variable name
+    requirements
+
 ### Changed
 
--   
+-   tests now employ shpec-helper's `stop_on_error`
+
+-   tests use sorta's `import.bash` to only import defined functions
+    from shpec-helper
+
+-   prefer (()) to [let]
 
 [v10.10.11] - 2017-03-01
 ------------------------
@@ -40,6 +50,7 @@ v0 in semver parlance.
 
   [Keep a Changelog]: http://keepachangelog.com/
   [Semantic Versioning]: http://semver.org/
-  [Unreleased]: https://github.com/binaryphile/y2s/compare/v10.10...v10.10.11
+  [Unreleased]: https://github.com/binaryphile/y2s/compare/v10.10.11...v10.10
+  [let]: http://wiki.bash-hackers.org/commands/builtin/let
   [v10.10.11]: https://github.com/binaryphile/y2s/compare/v10.10.10...v10.10.11
   [v10.10.10]: https://github.com/binaryphile/y2s/tree/v10.10.10

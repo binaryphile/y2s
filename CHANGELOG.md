@@ -7,8 +7,8 @@ The format is based on [Keep a Changelog] and this project adheres to
 Latest Changes
 ==============
 
-[Unreleased]
-------------
+[v0.0.2] - 2017-05-11
+---------------------
 
 ### Changed
 
@@ -31,8 +31,8 @@ Latest Changes
 -   shpecs failing in strict mode due to uninitialized variables and bad
     "read"s
 
-[v10.10.11] - 2017-03-01
-------------------------
+[v0.0.1] - 2017-03-01
+---------------------
 
 ### Changed
 
@@ -45,8 +45,8 @@ Latest Changes
 Older Changes
 =============
 
-[v10.10.10] - 2017-02-20
-------------------------
+[v0.0.0] - 2017-02-20
+---------------------
 
 ### Added
 

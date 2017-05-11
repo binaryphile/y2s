@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+find . -name '*_shpec.*sh' -print0 | xargs -0I filename bash -c 'echo "shpec filename"; shpec filename'

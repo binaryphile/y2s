@@ -41,8 +41,8 @@ _parse () {
   local datatype=$1
   local style=$2
 
-  [[ -z $curdatatype || $curdatatype  == "$datatype"  ]] || return
-  [[ -z $curdatatype && $datatype     == 'array'      ]] && key=0
+  [[ -z ${curdatatype:-} || $curdatatype  == "$datatype"  ]] || return
+  [[ -z ${curdatatype:-} && $datatype     == 'array'      ]] && key=0
   curdatatype=$datatype
   case $datatype in
     'array' ) _parse_array_values ;;
@@ -177,6 +177,7 @@ yml2struct () {
   local array_double_quoted_expression
   local array_plain_expression
   local array_single_quoted_expression
+  local curindent=0
   local hash_double_quoted_expression
   local hash_single_quoted_expression
   local hash_start_and_plain_expression

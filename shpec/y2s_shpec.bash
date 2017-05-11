@@ -84,7 +84,6 @@ describe yml2struct
     sample='one: 1'
     declare -A resulth=()
     expected='declare -A resulth='\''([one]="1" )'\'
-    set -x
     yml2struct resulth <<<"$sample"
     assert equal "$expected" "$(declare -p resulth)"
   end
@@ -108,29 +107,37 @@ describe yml2struct
   it "errors on a non-doubled single-quote in a single-quoted scalar"
     sample="one: '''"
     declare -A resulth=()
+    stop_on_error off
     yml2struct resulth <<<"$sample"
     assert unequal $? 0
+    stop_on_error
   end
 
   it "errors on a plain single-quote scalar"
     sample="one: '"
     declare -A resulth=()
+    stop_on_error off
     yml2struct resulth <<<"$sample"
     assert unequal 0 $?
+    stop_on_error
   end
 
   it "errors on a plain double-quote scalar"
     sample='one: "'
     declare -A resulth=()
+    stop_on_error off
     yml2struct resulth <<<"$sample"
     assert unequal 0 $?
+    stop_on_error
   end
 
   it "errors on a non-escaped double-quote in a double-quoted scalar"
     sample='one: """'
     declare -A resulth=()
+    stop_on_error off
     yml2struct resulth <<<"$sample"
     assert unequal 0 $?
+    stop_on_error
   end
 
   it "parses a plain escaped double-quote scalar"
@@ -152,8 +159,10 @@ describe yml2struct
   it "errors on a double-quoted double-quote with a leading escaped backslash scalar"
     sample='one: "\\""'
     declare -A resulth=()
+    stop_on_error off
     yml2struct resulth <<<"$sample"
     assert unequal $? 0
+    stop_on_error
   end
 
   it "doesn't expand shell variables"
@@ -190,7 +199,7 @@ describe yml2struct
   end
 
   it "parses a hash nested in a hash"
-    read -rd '' sample <<'EOS'
+    read -rd '' sample <<'EOS' ||:
 oneh:
   two: 2
 EOS
@@ -201,7 +210,7 @@ EOS
   end
 
   it "parses an array nested in a hash"
-    read -rd '' sample <<'EOS'
+    read -rd '' sample <<'EOS' ||:
 oneh:
   - zero
 EOS
@@ -212,7 +221,7 @@ EOS
   end
 
   it "continues parsing a hash after a nested element"
-    read -rd '' sample <<'EOS'
+    read -rd '' sample <<'EOS' ||:
 oneh:
   two: 2
 threeh:
@@ -225,7 +234,7 @@ EOS
   end
 
   it "parses a nested hash two levels deep"
-    read -rd '' sample <<'EOS'
+    read -rd '' sample <<'EOS' ||:
 oneh:
   twoh:
     three: 3

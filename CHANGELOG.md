@@ -2,18 +2,17 @@ Change Log
 ==========
 
 The format is based on [Keep a Changelog] and this project adheres to
-[Semantic Versioning], with the minor exception that v10 is considered
-v0 in semver parlance.
+[Semantic Versioning].
+
+Latest Changes
+==============
 
 [Unreleased]
 ------------
 
-### Added
-
--   explanation in readme that keys must meet bash variable name
-    requirements
-
 ### Changed
+
+-   reverted to normal versioning
 
 -   tests now employ shpec-helper's `stop_on_error`
 
@@ -21,6 +20,16 @@ v0 in semver parlance.
     from shpec-helper
 
 -   prefer (()) to [let]
+
+### Added
+
+-   explanation in readme that keys must meet bash variable name
+    requirements
+
+### Fixed
+
+-   shpecs failing in strict mode due to uninitialized variables and bad
+    "read"s
 
 [v10.10.11] - 2017-03-01
 ------------------------
@@ -32,6 +41,9 @@ v0 in semver parlance.
 -   clarified readme
 
 -   updated to shpec-helper from kaizen
+
+Older Changes
+=============
 
 [v10.10.10] - 2017-02-20
 ------------------------
@@ -50,7 +62,7 @@ v0 in semver parlance.
 
   [Keep a Changelog]: http://keepachangelog.com/
   [Semantic Versioning]: http://semver.org/
-  [Unreleased]: https://github.com/binaryphile/y2s/compare/v10.10.11...v10.10
+  [v0.0.2]: https://github.com/binaryphile/y2s/compare/v0.0.1...v0.0.2
   [let]: http://wiki.bash-hackers.org/commands/builtin/let
-  [v10.10.11]: https://github.com/binaryphile/y2s/compare/v10.10.10...v10.10.11
-  [v10.10.10]: https://github.com/binaryphile/y2s/tree/v10.10.10
+  [v0.0.1]: https://github.com/binaryphile/y2s/compare/v0.0.0...v0.0.1
+  [v0.0.0]: https://github.com/binaryphile/y2s/tree/v0.0.0

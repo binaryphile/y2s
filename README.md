@@ -1,14 +1,14 @@
 y2s
 ===
 
-y2s stands for "YAML2Struct". It is a handful of bash functions for
+y2s stands for "YAML2struct". It is a handful of bash functions for
 parsing a limited subset of YAML into a makeshift bash nested data
 structure.
 
 The structure, or "struct" for short, is a hash (a.k.a. associative
 array) which contains keys for all of the leaf elements in the YAML
-source document, along with a slightly custom syntax for storing all of
-the intermediate levels of the structure as well.
+source document, along with a slightly custom syntax for storing copies
+of all of the intermediate levels of the structure as well.
 
 For example, consider the following `demo.yml` file:
 
@@ -100,35 +100,44 @@ Then you may source it in your scripts with `source y2s.bash`.
 Limitations
 -----------
 
-y2s understands hashes and arrays, in addition to scalar values.
+y2s:
 
-y2s supports nesting arrays in hashes and vice-versa.
+-   understands hashes and arrays, in addition to scalar values.
 
-y2s understands plain (unquoted), single- and double-quoted scalars. It
-strives for compatibility with Ruby's syck implementation as a guide.
+-   only allows alphanumerics and underscores in hash keys, so they can
+    be instantiated as bash variables
 
-y2s only accepts indents of two space characters per level.
+-   supports nesting arrays in hashes and vice-versa.
 
-y2s only allows printable characters in values (including whitespace).
+-   understands plain (unquoted), single- and double-quoted scalars
 
-y2s only supports a very limited subset of YAML. It currently
-understands only single-lined values, although it does understand
-double-quoted syntax which allows the use of escaped characters such as
-`\n`.
+    -   it strives for compatibility with Ruby's syck implementation as
+        a guide
 
-y2s does not understand the JSON forms of keys, hashes or arrays.
+-   only accepts indents of two space characters per level
 
-Because y2s denormalizes the yml data, copying the same value into
+-   only allows printable characters in values (including whitespace)
+
+-   only supports a very limited subset of YAML
+
+    -   values are limited to a single line
+
+    -   double-quoted values do, however, allow the use of escaped
+        characters such as `\n`
+
+-   does not understand the JSON forms of keys, hashes or arrays
+
+-   does not support converting structs to yml, nor writing yml files
+
+-   has no feedback on errors which occur during parsing (at the moment)
+
+    -   the best thing to try is to pass the same input through a real
+        parser
+
+Also, because y2s denormalizes the yml data, copying the same value into
 multiple locations, it is only suitable for reading data. Writing data
 into a struct would require updating all of the locations in which that
-data appears. I have no plans for implementing such support.
-
-y2s does not support converting structs to yml, nor writing yml files,
-and there are no plans for such support.
-
-y2s has no feedback on errors which occur during parsing at the moment.
-The best thing to try is to pass the same input through a real parser,
-and to keep the aforementioned limitations in mind.
+data appears. There are no plans for implementing such support.
 
 Shouts-Out
 ----------

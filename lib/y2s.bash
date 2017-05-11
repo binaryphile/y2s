@@ -41,8 +41,8 @@ _parse () {
   local datatype=$1
   local style=$2
 
-  [[ -z $curdatatype || $curdatatype  == "$datatype"  ]] || return
-  [[ -z $curdatatype && $datatype     == 'array'      ]] && key=0
+  [[ -z ${curdatatype:-} || $curdatatype  == "$datatype"  ]] || return
+  [[ -z ${curdatatype:-} && $datatype     == 'array'      ]] && key=0
   curdatatype=$datatype
   case $datatype in
     'array' ) _parse_array_values ;;
@@ -96,9 +96,9 @@ _process_line () {
     if [[ -n $value ]]; then
       hash[$key]=$value
     else
-      let 'curindent += 1'
+      (( curindent += 1 )) ||:
       _y2s_rec resulth || return
-      let 'curindent -= 1'
+      (( curindent -= 1 )) ||:
       _value_of resulth hash[$key]
       for subkey in "${!resulth[@]}"; do
         printf -v hash[$key.$subkey] '%s' "${resulth[$subkey]}"
@@ -110,7 +110,7 @@ _process_line () {
   else
     return 1
   fi
-  if [[ $curdatatype == 'array' ]]; then let 'key += 1'; fi
+  if [[ $curdatatype == 'array' ]]; then (( key += 1 )) ||:; fi
 }
 
 _setup_expressions () {
@@ -177,6 +177,7 @@ yml2struct () {
   local array_double_quoted_expression
   local array_plain_expression
   local array_single_quoted_expression
+  local curindent=0
   local hash_double_quoted_expression
   local hash_single_quoted_expression
   local hash_start_and_plain_expression

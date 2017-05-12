@@ -3,8 +3,8 @@ dist:     trusty
 sudo:     false
 install:
   - git clone git://github.com/rylnd/shpec        --branch  0.2.2 --depth 1 "$HOME"/shpec
-  - git clone git://github.com/binaryphile/kaizen --branch v0.1.1 --depth 1 "$TRAVIS_BUILD_DIR"/../kaizen
-  - git clone git://github.com/binaryphile/nano   --branch v0.1.1 --depth 1 "$TRAVIS_BUILD_DIR"/../nano
+  - git clone git://github.com/binaryphile/kaizen --branch v0.5.2 --depth 1 "$TRAVIS_BUILD_DIR"/../kaizen
+  - git clone git://github.com/binaryphile/nano   --branch v0.1.3 --depth 1 "$TRAVIS_BUILD_DIR"/../nano
   - export PATH=$HOME/shpec/bin:$TRAVIS_BUILD_DIR/lib:$TRAVIS_BUILD_DIR/../nano/lib:$TRAVIS_BUILD_DIR/../kaizen/lib:$PATH
 script:   ./all-shpecs
 git:

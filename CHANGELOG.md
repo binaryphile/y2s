@@ -10,7 +10,9 @@ Latest Changes
 [Unreleased]
 ------------
 
+### Added
 
+-   compatibility with latest bash
 
 [v0.0.2] - 2017-05-11
 ---------------------

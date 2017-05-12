@@ -91,28 +91,6 @@ _parse_single_quoted_line () {
   value=${value//\'\'/\'}
 }
 
-_process_line () {
-  if (( indent == curindent )); then
-    if [[ -n $value ]]; then
-      hash[$key]=$value
-    else
-      (( curindent += 1 )) ||:
-      _y2s_rec resulth || return
-      (( curindent -= 1 )) ||:
-      _value_of resulth hash[$key]
-      for subkey in "${!resulth[@]}"; do
-        printf -v hash[$key.$subkey] '%s' "${resulth[$subkey]}"
-      done
-    fi
-  elif (( indent < curindent )); then
-    wait=true
-    break
-  else
-    return 1
-  fi
-  if [[ $curdatatype == 'array' ]]; then (( key += 1 )) ||:; fi
-}
-
 _setup_expressions () {
   array_double_quoted_expression='<indent>- "[value]" '
   array_plain_expression='<indent>- [value] '
@@ -163,7 +141,25 @@ _y2s_rec () {
   while [[ $wait == 'true' ]] || IFS= read -r line; do
     wait=false
     _parse_line   || return
-    _process_line || return
+    if (( indent == curindent )); then
+      if [[ -n $value ]]; then
+        hash[$key]=$value
+      else
+        (( curindent += 1 )) ||:
+        _y2s_rec resulth || return
+        (( curindent -= 1 )) ||:
+        _value_of resulth hash[$key]
+        for subkey in "${!resulth[@]}"; do
+          printf -v hash[$key.$subkey] '%s' "${resulth[$subkey]}"
+        done
+      fi
+    elif (( indent < curindent )); then
+      wait=true
+      break
+    else
+      return 1
+    fi
+    [[ $curdatatype == 'array' ]] && (( key += 1 ))
   done
 
   local "$ref" || return

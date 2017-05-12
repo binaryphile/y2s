@@ -1,4 +1,4 @@
-y2s
+y2s [![Build Status](https://travis-ci.org/binaryphile/y2s.svg?branch=master)](https://travis-ci.org/binaryphile/y2s)
 ===
 
 y2s stands for "YAML2struct". It is a handful of bash functions for

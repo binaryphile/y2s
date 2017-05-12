@@ -7,12 +7,12 @@ The format is based on [Keep a Changelog] and this project adheres to
 Latest Changes
 ==============
 
-[Unreleased]
+[v0.0.3] - 2017-05-12
 ------------
 
 ### Added
 
--   compatibility with latest bash
+-   compatibfility with bash 4.4-p12
 
 [v0.0.2] - 2017-05-11
 ---------------------
@@ -69,7 +69,7 @@ Older Changes
 
   [Keep a Changelog]: http://keepachangelog.com/
   [Semantic Versioning]: http://semver.org/
-  [Unreleased]: https://github.com/binaryphile/y2s/compare/v0.0.2...v0.0
+  [v0.0.3]: https://github.com/binaryphile/y2s/compare/v0.0.2...v0.0.3
   [v0.0.2]: https://github.com/binaryphile/y2s/compare/v0.0.1...v0.0.2
   [let]: http://wiki.bash-hackers.org/commands/builtin/let
   [v0.0.1]: https://github.com/binaryphile/y2s/compare/v0.0.0...v0.0.1
